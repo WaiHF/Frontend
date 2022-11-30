@@ -37,6 +37,7 @@ nav a {
 
     #about {
         grid-column: 1;
+        grid-row: 1 / 4;
     }
 
     #experience {
@@ -52,11 +53,9 @@ nav a {
     }
 }
 
-
-
-main div {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border: 10px solid #000000;
+@media (max-width: 799px) {
+    main {
+        padding-top: 40px;
+        margin: 0 auto;
+    }
 }
