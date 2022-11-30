@@ -1,35 +1,37 @@
-body {
+/* sets default font */
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: sans-serif;
+}
+
+/* sets background and default font size */
+html, body {
     margin: 0px;
     padding: 0px;
-    font-family: Sans-Serif;
     background-color: #f1f1f1;
+
+    font-size: 0.98rem;
+    line-height: 1.3;
 }
 
-nav {
-    position: fixed;
-    margin: 0px;
-    padding: 10px;
-    width: 100%;
-    height: 20px;
-    background-color: #ffffff;
-    text-align: center;
+/* line break formatting */
+body hr {
+    border-top: 1px solid #eee;
 }
 
-nav a {
-    margin-left: 5px;
-    margin-right: 5px;
-    padding: 4px;
-    text-decoration: none;
-    border-radius: 20px;
-    border: 2px solid #000000;
-
-}
-
+/* Grid layout for wider screens */
 @media (min-width: 800px) {
     main {
         display: grid;
-        padding-top: 40px;
-        max-width: 1300px;
+        padding-top: 50px;
+        padding-bottom: 20px;
+        max-width: 1400px;
         margin: 0 auto;
         grid-template-columns: 1fr 2fr;
         gap: 20px;
@@ -37,7 +39,7 @@ nav a {
 
     #about {
         grid-column: 1;
-        grid-row: 1 / 4;
+        grid-row: unset;
     }
 
     #experience {
@@ -53,9 +55,40 @@ nav a {
     }
 }
 
+/* Grid layout for smaller screens */
 @media (max-width: 799px) {
     main {
-        padding-top: 40px;
+        display: grid;
+        padding-top: 45px;
+        padding-bottom: 20px;
         margin: 0 auto;
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
+}
+
+/* Sets the background for each section */
+.section {
+    padding: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #fff;
+}
+
+/* needed to move logo to top right of section. */
+#about #nav{
+    display: block;
+    padding: 5px;
+    margin: 4px 0px 4px 0px;
+    border-width: 2px;
+    border-style:none none solid none ;
+    border-color: #686A6C;
+    text-decoration: none;
+    color: #000;
+}
+#about img, h2 {
+    /* needed to move logo to left of name */
+    display:inline-block;
+}
+#about img {
+    margin-left: 10px;
 }
