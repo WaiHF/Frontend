@@ -21,18 +21,19 @@ window.onload = () => {
             fetch(functionURL + pageName, {
                 method: 'PUT'
             })
-                // Returns the function's response by running .json() on recieved data.
+                // Returns the function's response after running .json() on recieved data.
                 .then(funcResponse => funcResponse.json())
-                .then((funcData) => {
+                .then(funcData => 
                     // After 2 seconds try to to visit function's result page.
                     // Maybe can change this to a loop instead of waiting for 2 seconds.
                     setTimeout (() => fetch(funcData.statusQueryGetUri)
+                    // Returns the function's result page response after running .json() on recieved data.
                     .then(funcResult => funcResult.json())
+                    // Prints the visitor's count.
+                    // Need to implement this into the page.
                     .then(result => console.log('There have been '  + result.output.visits + ' to this page.'))
                     .catch(error => console.log('Failed to get function result: ' + error))
-                    , 2000)
-                    
-                })
+                    , 2000))
                 .catch(error => console.log('Failed to run function: ' + error));
         })
         .catch(error => console.error('Failed to check status: ' + error));
