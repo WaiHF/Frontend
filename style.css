@@ -10,6 +10,12 @@ html, body {
     color: #e6e6e6;
 }
 
+body a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #0084dced;
+}
+
 /* line break formatting */
 body hr {
     border: 1px solid rgb(75, 75, 75);
@@ -63,10 +69,6 @@ body hr {
     display: block;
     padding-bottom: 7px;
     margin: 4px 0px 4px 0px;
-    
-    font-weight: bold;
-    text-decoration: none;
-    color: #0084dcdb;
 }
 #about img, h2 {
     /* needed to move logo to left of name */
@@ -81,6 +83,7 @@ body hr {
 }
 
 #visit_counter {
+    display: block;
     padding: 0px;
     text-align: center;
 }

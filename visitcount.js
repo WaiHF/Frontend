@@ -21,20 +21,67 @@ window.onload = () => {
             fetch(functionURL + pageName, {
                 method: 'PUT'
             })
-                // Returns the function's response after running .json() on recieved data.
+                // Takes the response from the fetch, reads it, and returns a JS object.
                 .then(funcResponse => funcResponse.json())
-                .then(funcData =>
-                    // After 2 seconds try to to visit function's result page.
-                    // Maybe can change this to a loop instead of waiting for 2 seconds.
-                    setTimeout(() => fetch(funcData.statusQueryGetUri)
-                        // Returns the function's result page response after running .json() on recieved data.
-                        .then(funcResult => funcResult.json())
-                        // Prints the visitor's count.
-                        // Need to implement this into the page.
-                        .then(result => console.log('There have been ' + result.output.visits + ' to this page.'))
-                        .catch(error => console.log('Failed to get function result: ' + error))
-                        , 2000))
-                .catch(error => console.log('Failed to run function: ' + error));
+                .then(funcData => {
+                    let retries = 100;
+                    let resultURL = funcData.statusQueryGetUri
+                    // Recursively checks for the Azure function result.
+                    const checkResult = (url, retries) =>
+                        fetch(url)
+                            .then(res => {
+                                // If status is OK and retries is still positve then return response as JS object to next step.
+                                if (res.ok && retries > 0) return res.json();
+                                // If retries is more than 0 then retry.
+                                if (retries > 0) return checkResult(url, retries - 1);
+                                // Throw error if out of retries / no OK status.
+                                throw new Error(res.status);
+                            })
+                            .then((result) => {
+                                // If runtimeStatus is not completed then retry fetch.
+                                if (result.runtimeStatus !== 'Completed') {
+                                    // Updates the visitor counter.
+                                    updateVisitCounter();
+                                    return checkResult(url, retries - 1);
+                                }
+                                // Updates the visitor counter with a result.
+                                if (!result.output.error) {
+                                    updateVisitCounter(result.output.visits);
+                                } else {
+                                    updateVisitCounter(result.output.error);
+                                }
+                            })
+                            .catch(error => {
+                                updateVisitCounter(error);
+                                console.error('Failed to get result: ' + error)
+                            });
+
+                    // Starts recursive check for Azure functions result.
+                    checkResult(resultURL, retries);
+                })
+                .catch(error => {
+                    updateVisitCounter(error);
+                    console.log('Failed to run function: ' + error)
+                });
         })
-        .catch(error => console.error('Failed to check status: ' + error));
+        .catch(error => {
+            updateVisitCounter(error);
+            console.error('Failed to check status: ' + error)
+        });
+}
+
+// Updates the inner HTML for the counter
+function updateVisitCounter(result) {
+    const counterEl = document.getElementById('visit_counter');
+    // Animates the loading text if no result is provided.
+    if (!result) {
+        let dots = counterEl.innerHTML.split('.');
+        if (dots.length >= 4) {
+            counterEl.innerHTML = 'Visitor count: loading';
+        } else {
+            counterEl.innerHTML = counterEl.innerHTML + '.';
+        }
+    } else {
+        counterEl.innerHTML = 'Visitor count: ' + result;
+    }
 }
