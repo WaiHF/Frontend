@@ -4,8 +4,10 @@ window.onload = () => {
 
     fetch(url)
         .then((response) => {
+            // Removes trailling #.
+            let pageName = url.replace(/#+$/, "");
             // Splits the URL by / and gets the last item in the array which will be the page name
-            let pageName = url.split("/").pop();
+            pageName = pageName.split("/").pop();
 
             // 404 and index might not show in the URL so they need to be processed in the statement below
             if (response.status == '404') {
@@ -24,7 +26,7 @@ window.onload = () => {
                 // Takes the response from the fetch, reads it, and returns a JS object.
                 .then(funcResponse => funcResponse.json())
                 .then(funcData => {
-                    let retries = 100;
+                    let retries = 1000;
                     let resultURL = funcData.statusQueryGetUri
                     // Recursively checks for the Azure function result.
                     const checkResult = (url, retries) =>
