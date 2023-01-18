@@ -14,11 +14,19 @@
     <nav>
     </nav>
     <main>
-        <div id="Contact" class="section section_all">
+        <div id="contact" class="section section_all">
             <h2>Contact Form</h2>
-            <p>In progress</p>
+            <form id="contact_form">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" placeholder="Enter your name"><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" placeholder="Enter your email"><br>
+                <label for="msg">Message:</label><br>
+                <textarea id="msg" name="msg" rows="5" placeholder="Enter your message">Enter your name</textarea><br>
+                <input type="submit" value="Submit">
+              </form> 
         </div>
-        <div class="section section_main">
+        <div class="section section_all">
             <a id="visit_counter" href="https://waihfun.com/projects.html">Visitor count: loading...</a>
         </div>
     </main>

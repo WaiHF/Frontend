@@ -1,5 +1,6 @@
 /* sets background and default font size */
-html, body {
+html,
+body {
     margin: 0px;
     padding: 0px;
     background-color: #1c1c1c;
@@ -65,21 +66,45 @@ body hr {
 }
 
 /* needed to move logo to top right of section. */
-#about #nav{
+#about #nav {
     display: block;
     padding-bottom: 7px;
     margin: 4px 0px 4px 0px;
 }
-#about img, h2 {
+
+#about img,
+h2 {
     /* needed to move logo to left of name */
-    display:inline-block;
+    display: inline-block;
 }
+
 #about img {
     margin-left: 10px;
 }
 
 #not_found {
     text-align: center;
+}
+
+#contact {
+    text-align: center;
+}
+
+#contact_form input[type=text],
+input[type=email],
+textarea {
+    width: 60%;
+    padding: 6px;
+    margin: 8px 0;
+    display: inline-block;
+}
+
+#contact_form input[type=submit] {
+    width: 6em;
+    padding: 6px;
+    margin: 8px 0;
+    background-color: #4CAF50;
+    color: white;
 }
 
 #visit_counter {
